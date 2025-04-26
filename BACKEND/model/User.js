@@ -10,7 +10,7 @@ const UserSchema = new schema({
     FarmName: { type: String, required: true },
     Telephone: {type: String, required: true},
     Email: { type: String, required: true },
-   // Data : {type}
+   // Data : {}
 },
     {collection: "Users"}
 )
