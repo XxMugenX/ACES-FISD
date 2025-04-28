@@ -30,8 +30,19 @@ app.use('/api/Signup', loginRoute);
 app.use('/api/Signup', sensorRoute);
 app.use('/api/Signup', scheduleRoute);
 app.use('/api/Login', aiAnalyticsRoute);
-app.use()
+app.use(cors)
 app.use(express.json())
+
+
+//starts connection
+mongoose.connect(URI);
+//end
+
+//start listening for when  the connection is open
+connection.once('open', () => {
+    console.log('database is up')
+})
+//end
 
 
 app.listen(PORT, () => {

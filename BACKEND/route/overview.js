@@ -6,7 +6,7 @@ const User = require('../model/User')
 const SECRET = process.env.JWT_SECRET
 
 router.get('/',async (req,res) => {
-    const {Token} = req.body
+    const {Token} =  req.body
 
     try {
         const SessionUser = JWT.verify(Token, SECRET)

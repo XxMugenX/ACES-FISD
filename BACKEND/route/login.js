@@ -2,15 +2,14 @@ const express = require('express')
 require('dotenv').config()
 const router = express.Router()
 const JWT = require('jsonwebtoken')
-const bcrypt = require ('bcrypt')
+const bcrypt = require ('bcryptjs')
 const User = require('../model/User')
 const SECRET = process.env.JWT_SECRET
 
 router.post('/',async (req,res) => {
-    const {UserName, password} = req.body;
-})
-
-const user = await User.findOne({UserName}).lean();
+    const { UserName, password } = req.body;
+    
+    const user = await User.findOne({UserName}).lean();
 
 if(!user) {
     return res.json({
@@ -36,5 +35,9 @@ else {
         error : 'Incorrect Username/Password'
     })
 }
+
+})
+
+
 
 module.exports = router
