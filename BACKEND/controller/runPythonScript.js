@@ -27,7 +27,7 @@ function runPythonScript(scriptPath, args = []) {
 
 
 // Path for python script
-const pythonScriptPath = './pythonpath/test.py'; 
+const pythonScriptPath = '../controller/'; 
 
 //arguments available as input for python script
 //import sys in python file and access argument from element 1
@@ -41,3 +41,5 @@ runPythonScript(pythonScriptPath, scriptArguments)
   .catch((error) => {
     console.error('Error running Python script:', error);
   });
+
+module.exports = runPythonScript;
