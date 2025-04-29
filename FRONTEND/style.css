@@ -1,0 +1,86 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+html{
+    padding: 2em 4em;
+
+    background-color: #efefef;
+    height: 100%;
+}
+
+body{
+    display: flex;
+    height: 100%;
+}
+
+body > nav{
+    background-color: #1e4c42;
+    height: 80%;
+    padding: 1.2em;
+    border-radius: 1em 0 0 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    flex: 1;
+}
+
+nav > div:first-child{
+    color: white;
+    font-size: 32px;
+}
+
+nav > div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 2;
+}
+
+nav > div:nth-child(2) div{
+    background-color: #e7fe98;
+    padding: 8px;
+    width: 8em;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+nav > div:nth-child(3){
+    background-color: rgb(255, 255, 255, 0.6);
+    padding: 10px;
+    border-radius: 8px;
+    height: 7em;
+}
+
+nav > div:nth-child(3) h4{
+    opacity: 1;
+}
+
+body div.second{
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+    background-color: #fefefc;
+    padding: 2em;
+}
+
+body div.second .fruits{
+    display: flex;
+    gap: 10px;
+}
+
+body div.second .fruits div{
+    height: 8em;
+    width: 8em;
+    background-color: #1f4d43;
+    border-radius: 8px;
+}
+
+body div.second .fruits div:nth-child(even) {
+    background-color: #f8ffdd;
+}
+
+body div.third{
+    flex: 2;
+}
