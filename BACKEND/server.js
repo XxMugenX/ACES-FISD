@@ -24,6 +24,7 @@ const sensorDataRoute = require('./route/sensordata')
 const app = express();
 
 //middleware
+app.use(cors())
 app.use('/api/overview', overviewRoute);
 app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
@@ -31,7 +32,7 @@ app.use('/api/sensor', sensorRoute);
 app.use('/api/sensordata', sensorDataRoute);
 //app.use('/api/Signup', scheduleRoute);
 app.use('/api/aianalytics', aiAnalyticsRoute);
-app.use(cors())
+
 app.use(express.json())
 app.use(bodyParser.json())
 
