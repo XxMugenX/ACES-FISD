@@ -27,16 +27,18 @@ function runPythonScript(scriptPath, args = []) {
 
 
 // Path for python script
-const pythonScriptPath = '../controller/'; 
+const pythonScriptPath = '../AI_MODEL/app.py'; 
+const cropRecommendationPath = '../AI_MODEL/Crop_Recommendation.csv'
 
 //arguments available as input for python script
 //import sys in python file and access argument from element 1
-const scriptArguments = ['data1', 'data2' ];
+const scriptArguments = [cropRecommendationPath, 'data2' ];
 
 runPythonScript(pythonScriptPath, scriptArguments)
   .then((result) => {
-    const result1 = result;
-    console.log('Python script output:', result);
+    const result1 = result
+    //const Output = JSON.parse(result1)
+    console.log( result1);
   })
   .catch((error) => {
     console.error('Error running Python script:', error);

@@ -5,17 +5,20 @@ const router = express.Router()
 const User = require('../model/User')
 const SECRET = process.env.JWT_SECRET
 
+router.use(express.json())
+
 router.get('/',async (req,res) => {
     const {Token} =  req.body
 
     try {
         const SessionUser = JWT.verify(Token, SECRET)
-        const _id = CurrentUser.id
+        const _id = SessionUser.id
         const CurrentUser = await User.findById(_id)
+        
 
-        //get sensor variables, ai insights and schedule/tasks for user
+        //get sensor data overview,
         return res.json({
-
+            SensorData : CurrentUser.SensorData
         })
         
     }
@@ -26,6 +29,8 @@ router.get('/',async (req,res) => {
         })
     }
 })
+
+
 
 
 module.exports = router

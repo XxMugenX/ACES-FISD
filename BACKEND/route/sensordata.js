@@ -7,13 +7,25 @@ const SECRET = process.env.JWT_SECRET
 
 router.use(express.json())
 
-router.get('/',async (req,res) => {
-    const {Token} = req.body
+//endpoint for sending sensor data to database
+router.post('/', async (req, res) => {
+    const {Token,data} =  req.body
 
     try {
+        //user verification
         const SessionUser = JWT.verify(Token, SECRET)
         const _id = SessionUser.id
-        const CurrentUser = await User.findById(_id)
+        const CurrentUser = await User.findByIdAndUpdate(_id,
+            { SensorData: data },
+            {
+                new: true,
+                upsert : true
+            })
+        
+        return res.json({
+            message : "ok"
+        })
+        
     }
     catch(err) {
         console.log(err.code)
@@ -22,5 +34,6 @@ router.get('/',async (req,res) => {
         })
     }
 })
+
 
 module.exports = router

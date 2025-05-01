@@ -3,7 +3,10 @@ const router = express.Router()
 const bcrypt = require ('bcryptjs')
 const User = require('../model/User')
 
-router.post('/', async (req,res) => {
+router.use(express.json())
+
+router.post('/', async (req, res) => {
+    console.log(req.body)
     const{
         UserName, password:plainTextPassword,
         Email, Telephone, FarmName
@@ -50,7 +53,8 @@ router.post('/', async (req,res) => {
             UserName: UserName,
     })
         console.log("Signup successful", NewUser)
-    } catch(err) {
+    } catch (err) {
+        //handles duplicate username
         if (err.code === 11000) {
             return res.json({
                 error: 'Username is already in use'

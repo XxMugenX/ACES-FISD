@@ -1,19 +1,25 @@
 const express = require('express')
+require('dotenv').config();
+const JWT = require('jsonwebtoken')
 const router = express.Router()
 const User = require('../model/User')
+const SECRET = process.env.JWT_SECRET
 
+//middleware
+router.use(express.json())
+
+//endpoint for getting readings of selected sensor from the database
 router.get('/', async (req, res) => {
-    const { data } = req.body
+    const { Token,sensor } = req.body
 
         try {
             const SessionUser = JWT.verify(Token, SECRET)
-            const _id = CurrentUser.id
+            const _id = SessionUser.id
             const CurrentUser = await User.findById(_id)
-    
-            //get values of available sensor for user
-            //data in json form?
+           
+            //get values of selected sensor for user
             return res.json({
-                 data : data
+                 sensordata : CurrentUser.SensorData[sensor]
             })
             
         }

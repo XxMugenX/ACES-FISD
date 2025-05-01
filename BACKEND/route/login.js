@@ -6,6 +6,9 @@ const bcrypt = require ('bcryptjs')
 const User = require('../model/User')
 const SECRET = process.env.JWT_SECRET
 
+router.use(express.json())
+
+//login endpoint
 router.post('/',async (req,res) => {
     const { UserName, password } = req.body;
     
@@ -26,7 +29,7 @@ if(await bcrypt.compare(password, user.Password)) {
 
     return res.json({
         status : 'ok',
-        Token : Token
+        Token : token
     })
 } 
 else {

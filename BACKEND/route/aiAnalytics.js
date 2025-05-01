@@ -3,19 +3,24 @@ const router = express.Router()
 const User = require('../model/User')
 require('dotenv').config()
 const JWT = require('jsonwebtoken')
+const readAiAnalysis = require('../controller/readAiAnalysis')
 const SECRET = process.env.JWT_SECRET 
 
+router.use(express.json())
+
 router.get('/', async (req, res) => {
-    
+    const {Token,id} = req.body
             try {
                 const SessionUser = JWT.verify(Token, SECRET)
-                const _id = CurrentUser.id
+                const _id = SessionUser.id
                 const CurrentUser = await User.findById(_id)
-        
-                //get values of available sensor for user
-                //data in json form?
+                
+                //get analysis of selected crop for user
+                const data = readAiAnalysis(id)
+                //runPythonScript("../AI_MODEL/app.py", selected_crop)
+                
                 return res.json({
-                     data : data
+                    data
                 })
                 
             }
