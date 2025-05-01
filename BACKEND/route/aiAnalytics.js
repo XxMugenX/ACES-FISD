@@ -9,14 +9,14 @@ const SECRET = process.env.JWT_SECRET
 router.use(express.json())
 
 router.get('/', async (req, res) => {
-    const {Token,id} = req.body
+    const {Token,fruitId} = req.body
             try {
                 const SessionUser = JWT.verify(Token, SECRET)
                 const _id = SessionUser.id
                 const CurrentUser = await User.findById(_id)
                 
                 //get analysis of selected crop for user
-                const data = readAiAnalysis(id)
+                const data = readAiAnalysis(fruitId)
                 //runPythonScript("../AI_MODEL/app.py", selected_crop)
                 
                 return res.json({
