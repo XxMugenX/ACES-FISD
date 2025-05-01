@@ -373,16 +373,28 @@
        // }
 
         // Function to handle signup form submission
-        function handleSignup() {
+        async function handleSignup() {
             resetErrors();
             
-            const username = document.getElementById('signup-username').value;
-            const farmname = document.getElementById('signup-farmname').value;
+            const UserName = document.getElementById('signup-username').value;
+            const farmName = document.getElementById('signup-farmname').value;
             const email = document.getElementById('signup-email').value;
             const telephone = document.getElementById('signup-telephone').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
             
+            const result = await fetch('/api/Signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                    UserName, password,
+                    DOB, email,
+                    telephone, F_name,
+                    L_name
+                })
+            }).then((res) => res.json())
             //let isValid = true;
             
             // Validate username

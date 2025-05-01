@@ -9,6 +9,29 @@ const SECRET = process.env.JWT_SECRET
 router.use(express.json())
 
 router.get('/', async (req, res) => {
+    const {Token} = req.query
+            try {
+                const SessionUser = JWT.verify(Token, SECRET)
+                const _id = SessionUser.id
+                const CurrentUser = await User.findById(_id)
+                
+                //get analysis of all crops for user
+                const allData = require('../AI_MODEL/data.json')
+                               
+                return res.json({
+                    allData
+                })
+                
+            }
+            catch(err) {
+                console.log(err.code)
+                return res.json({
+                    error : err
+                })
+            }
+})
+
+router.get('/:fruitId', async (req, res) => {
     const {Token,fruitId} = req.query
             try {
                 const SessionUser = JWT.verify(Token, SECRET)
@@ -17,7 +40,6 @@ router.get('/', async (req, res) => {
                 
                 //get analysis of selected crop for user
                 const data = readAiAnalysis(fruitId)
-                //runPythonScript("../AI_MODEL/app.py", selected_crop)
                 
                 return res.json({
                     data
