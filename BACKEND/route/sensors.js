@@ -10,7 +10,7 @@ router.use(express.json())
 
 //endpoint for getting readings of selected sensor from the database
 router.get('/', async (req, res) => {
-    const { Token,sensor } = req.body
+    const { Token,sensor } = req.query
 
         try {
             const SessionUser = JWT.verify(Token, SECRET)

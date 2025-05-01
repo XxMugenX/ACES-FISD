@@ -3,545 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Service - Login</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #e6e6e6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            display: flex;
-            width: 900px;
-            height: 600px;
-            background-color: white;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .left-panel {
-            flex: 1;
-            padding: 40px 40px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            max-height: 600px;
-        }
-
-        .right-panel {
-            flex: 1;
-            background: linear-gradient(to bottom, #33ce95, #18b07d, #07996c);
-            color: white;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 25px;
-            font-weight: bold;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 45px;
-            cursor: pointer;
-            width: 24px;
-            height: 24px;
-        }
-        
-        .show-password {
-            display: block;
-        }
-        
-        .hide-password {
-            display: none;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            background-color: #f2f2f2;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .btn {
-            background-color: #05976a;
-            color: white;
-            border: none;
-            padding: 15px;
-            width: 100%;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #048058;
-        }
-
-        .right-panel h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .right-panel p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .link {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 2px solid white;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .link:hover {
-            background-color: white;
-            color: #18b07d;
-        }
-
-        .toggle-forms {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .toggle-forms a {
-            color: #05976a;
-            text-decoration: none;
-        }
-
-        .toggle-forms a:hover {
-            text-decoration: underline;
-        }
-
-        /* Hide forms initially */
-        #signup-form {
-            display: none;
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 5px;
-            color: white;
-            font-weight: 500;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1000;
-        }
-
-        .notification.success {
-            background-color: #27ae60;
-        }
-
-        .notification.error {
-            background-color: #e74c3c;
-        }
-
-        .notification.show {
-            opacity: 1;
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Login Form -->
-        <div class="left-panel" id="login-form">
-            <h1>Signin</h1>
-            <div class="input-group">
-                <label for="login-username">Username</label>
-                <input type="text" id="login-username" class="input-field" placeholder="Enter your username">
-                <div class="error-message" id="login-username-error"></div>
+    <nav>
+        <div>yourland</div>
+        <div>
+            <div>Overview</div>
+            <div>Sensors</div>
+            <div>AI Analytics</div>
+        </div>
+        <div>
+            <h4>new!</h4>
+            <p>
+                Ready to connect and <br>help farmers grow
+            </p>
+            <img src="" alt="Weird looking">
+        </div>
+        <div>
+            <p>Logout</p>
+        </div>
+    </nav>
+    <div class="second">
+        <!-- <div>
+            Your weekly progress
+        </div> -->
+        <div class="fruits">
+            <div>
+                <img src="" alt="Weird looking">
+                <p>mango</p>
             </div>
-            <div class="input-group">
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" class="input-field" placeholder="Enter your password">
-                <div class="password-toggle" onclick="togglePassword('login-password', 'login-eye-show', 'login-eye-hide')">
-                    <svg id="login-eye-show" class="show-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    <svg id="login-eye-hide" class="hide-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                        <line x1="1" y1="1" x2="23" y2="23"></line>
-                    </svg>
-                </div>
-                <div class="error-message" id="login-password-error"></div>
+            <div>
+                <img src="" alt="Weird looking">
+                <p>pear</p>
             </div>
-            <button class="btn" id="login-btn" onclick="handleLogin()">Signin</button>
-            <div class="toggle-forms">
-                <p>No account yet? <a href="#" id="show-signup">Signup</a></p>
+            <div>
+                <img src="" alt="Weird looking">
+                <p>avocado</p>
+            </div>
+            <div>
+                <img src="" alt="Weird looking">
+                <p>carrot</p>
             </div>
         </div>
-
-        <!-- Signup Form -->
-        <div class="left-panel" id="signup-form">
-            <h1>Signup</h1>
-            <div class="input-group">
-                <label for="signup-username">Username</label>
-                <input type="text" id="signup-username" class="input-field" placeholder="Choose a username">
-                <div class="error-message" id="username-error"></div>
-            </div>
-            <div class="input-group">
-                <label for="signup-farmname">Farm Name</label>
-                <input type="text" id="signup-farmname" class="input-field" placeholder="Enter your farm name">
-                <div class="error-message" id="farmname-error"></div>
-            </div>
-            <div class="input-group">
-                <label for="signup-email">Email</label>
-                <input type="email" id="signup-email" class="input-field" placeholder="Enter your email">
-                <div class="error-message" id="email-error"></div>
-            </div>
-            <div class="input-group">
-                <label for="signup-telephone">Telephone</label>
-                <input type="tel" id="signup-telephone" class="input-field" placeholder="Enter your telephone number">
-                <div class="error-message" id="telephone-error"></div>
-            </div>
-            <div class="input-group">
-                <label for="signup-password">Password</label>
-                <input type="password" id="signup-password" class="input-field" placeholder="Create a password">
-                <div class="password-toggle" onclick="togglePassword('signup-password', 'signup-eye-show', 'signup-eye-hide')">
-                    <svg id="signup-eye-show" class="show-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    <svg id="signup-eye-hide" class="hide-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                        <line x1="1" y1="1" x2="23" y2="23"></line>
-                    </svg>
-                </div>
-                <div class="error-message" id="password-error"></div>
-            </div>
-            <div class="input-group">
-                <label for="signup-confirm-password">Confirm Password</label>
-                <input type="password" id="signup-confirm-password" class="input-field" placeholder="Confirm your password">
-                <div class="password-toggle" onclick="togglePassword('signup-confirm-password', 'signup-confirm-eye-show', 'signup-confirm-eye-hide')">
-                    <svg id="signup-confirm-eye-show" class="show-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    <svg id="signup-confirm-eye-hide" class="hide-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                        <line x1="1" y1="1" x2="23" y2="23"></line>
-                    </svg>
-                </div>
-                <div class="error-message" id="confirm-password-error"></div>
-            </div>
-            <button class="btn" id="signup-btn" onclick="handleSignup()">Signup</button>
-            <div class="toggle-forms">
-                <p>Already have an account? <a href="#" id="show-login">Signin</a></p>
-            </div>
+        <div class="graph"></div>
+        <div class="perfect_day"></div>
+    </div>
+    <div class="third">
+        <div>
+            <p>12</p>
+            <div></div>
         </div>
-
-        <!-- Right Panel - Welcome Message -->
-        <div class="right-panel">
-            <h2>Welcome back!</h2>
-            <p>Welcome back! We are so happy to have you here. It's great to see you again. We hope you had a safe and enjoyable time away.</p>
-            <a href="#" class="link" id="toggle-link">No account yet? Signup.</a>
+        <div>
+            <p>13</p>
+            <div></div>
+        </div>
+        <div>
+            <p>14</p>
+            <div></div>
+        </div>
+        <div>
+            <p>15</p>
+            <div></div>
         </div>
     </div>
-
-    <!-- Notification Container -->
-    <div id="notification" class="notification"></div>
-
-    <script>
-        // Simple JavaScript to toggle between login and signup forms
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('login-form');
-            const signupForm = document.getElementById('signup-form');
-            const showSignup = document.getElementById('show-signup');
-            const showLogin = document.getElementById('show-login');
-            const toggleLink = document.getElementById('toggle-link');
-
-            showSignup.addEventListener('click', function(e) {
-                e.preventDefault();
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'flex';
-                toggleLink.textContent = 'Already have an account? Signin.';
-            });
-
-            showLogin.addEventListener('click', function(e) {
-                e.preventDefault();
-                signupForm.style.display = 'none';
-                loginForm.style.display = 'flex';
-                toggleLink.textContent = 'No account yet? Signup.';
-            });
-
-            toggleLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (loginForm.style.display !== 'none') {
-                    loginForm.style.display = 'none';
-                    signupForm.style.display = 'flex';
-                    this.textContent = 'Already have an account? Signin.';
-                } else {
-                    signupForm.style.display = 'none';
-                    loginForm.style.display = 'flex';
-                    this.textContent = 'No account yet? Signup.';
-                }
-            });
-        });
-
-        // Function to toggle password visibility
-        function togglePassword(inputId, showIconId, hideIconId) {
-            const passwordInput = document.getElementById(inputId);
-            const showIcon = document.getElementById(showIconId);
-            const hideIcon = document.getElementById(hideIconId);
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                showIcon.classList.remove('show-password');
-                showIcon.classList.add('hide-password');
-                hideIcon.classList.remove('hide-password');
-                hideIcon.classList.add('show-password');
-            } else {
-                passwordInput.type = 'password';
-                hideIcon.classList.remove('show-password');
-                hideIcon.classList.add('hide-password');
-                showIcon.classList.remove('hide-password');
-                showIcon.classList.add('show-password');
-            }
-        }
-        
-        // Function to display notification
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = 'notification ' + type;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Function to reset all error messages
-        function resetErrors() {
-            const errorElements = document.querySelectorAll('.error-message');
-            errorElements.forEach(element => {
-                element.style.display = 'none';
-            });
-        }
-
-        // Function to check if username exists
-        function usernameExists(username) {
-            const users = JSON.parse(localStorage.getItem('farmUsers')) || [];
-            return users.some(user => user.username.toLowerCase() === username.toLowerCase());
-        }
-
-        // Function to handle signup form submission
-        function handleSignup() {
-            resetErrors();
-            
-            const username = document.getElementById('signup-username').value;
-            const farmname = document.getElementById('signup-farmname').value;
-            const email = document.getElementById('signup-email').value;
-            const telephone = document.getElementById('signup-telephone').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
-            
-            let isValid = true;
-            
-            // Validate username
-            if (!username) {
-                document.getElementById('username-error').textContent = 'Username is required';
-                document.getElementById('username-error').style.display = 'block';
-                isValid = false;
-            } else if (usernameExists(username)) {
-                document.getElementById('username-error').textContent = 'Username is already in use';
-                document.getElementById('username-error').style.display = 'block';
-                
-                // Log to console as requested
-                console.log({
-                    "error": "Username is already in use"
-                });
-                
-                showNotification('Username is already in use', 'error');
-                isValid = false;
-            }
-            
-            // Validate farm name
-            if (!farmname) {
-                document.getElementById('farmname-error').textContent = 'Farm name is required';
-                document.getElementById('farmname-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Validate email
-            if (!email) {
-                document.getElementById('email-error').textContent = 'Email is required';
-                document.getElementById('email-error').style.display = 'block';
-                isValid = false;
-            } else if (!/\S+@\S+\.\S+/.test(email)) {
-                document.getElementById('email-error').textContent = 'Please enter a valid email';
-                document.getElementById('email-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Validate telephone
-            if (!telephone) {
-                document.getElementById('telephone-error').textContent = 'Telephone number is required';
-                document.getElementById('telephone-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Validate password
-            if (!password) {
-                document.getElementById('password-error').textContent = 'Password is required';
-                document.getElementById('password-error').style.display = 'block';
-                isValid = false;
-            } else if (password.length < 6) {
-                document.getElementById('password-error').textContent = 'Password must be at least 6 characters';
-                document.getElementById('password-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Check if passwords match
-            if (password !== confirmPassword) {
-                document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
-                document.getElementById('confirm-password-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Get existing users or initialize empty array
-                const users = JSON.parse(localStorage.getItem('farmUsers')) || [];
-                
-                // Add new user
-                users.push({
-                    username,
-                    farmname,
-                    email,
-                    telephone,
-                    password // In a real app, you'd hash this password
-                });
-                
-                // Save back to localStorage
-                localStorage.setItem('farmUsers', JSON.stringify(users));
-                
-                // Log success to console as requested
-                console.log({
-                    "status": "ok"
-                });
-                
-                // Show success notification
-                showNotification('Signup successful! Redirecting to login...', 'success');
-                
-                // Redirect to login after short delay
-                setTimeout(() => {
-                    document.getElementById('show-login').click();
-                }, 2000);
-            }
-        }
-
-        // Function to handle login form submission
-        function handleLogin() {
-            resetErrors();
-            
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            
-            let isValid = true;
-            
-            // Validate username
-            if (!username) {
-                document.getElementById('login-username-error').textContent = 'Username is required';
-                document.getElementById('login-username-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Validate password
-            if (!password) {
-                document.getElementById('login-password-error').textContent = 'Password is required';
-                document.getElementById('login-password-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Get users from localStorage
-                const users = JSON.parse(localStorage.getItem('farmUsers')) || [];
-                
-                // Find user with matching username and password
-                const user = users.find(u => u.username === username && u.password === password);
-                
-                if (user) {
-                    // Generate a mock token
-                    const token = "farmService_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                    
-                    // Store token in localStorage
-                    localStorage.setItem('farmServiceToken', token);
-                    localStorage.setItem('currentUser', username);
-                    
-                    // Log success to console as requested
-                    console.log({
-                        "status": "ok",
-                        "Token": token
-                    });
-                    
-                    // Show success notification
-                    showNotification('Login successful!', 'success');
-                    
-                    // In a real app, you would redirect to dashboard
-                    // For demo, we'll just show an alert after a delay
-                    setTimeout(() => {
-                        alert('You are now logged in! In a real app, you would be redirected to the dashboard.');
-                    }, 2000);
-                    
-                } else {
-                    // Log error to console as requested
-                    console.log({
-                        "status": "error",
-                        "error": "Incorrect Username/Password"
-                    });
-                    
-                    // Show error notification
-                    showNotification('Incorrect username or password', 'error');
-                }
-            }
-        }
-    </script>
 </body>
 </html>
