@@ -8,7 +8,7 @@ const SECRET = process.env.JWT_SECRET
 router.use(express.json())
 
 router.get('/',async (req,res) => {
-    const {Token} = req.body
+    const {Token} = req.query
 
     try {
         const SessionUser = JWT.verify(Token, SECRET)

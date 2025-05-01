@@ -6,7 +6,6 @@ const User = require('../model/User')
 router.use(express.json())
 
 router.post('/', async (req, res) => {
-    console.log(req.body)
     const{
         UserName, password:plainTextPassword,
         Email, Telephone, FarmName
