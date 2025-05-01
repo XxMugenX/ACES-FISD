@@ -32,7 +32,9 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:fruitId', async (req, res) => {
-    const {Token,fruitId} = req.params
+    const { fruitId } = req.params
+    const { Token } = req.query
+    
             try {
                 const SessionUser = JWT.verify(Token, SECRET)
                 const _id = SessionUser.id
