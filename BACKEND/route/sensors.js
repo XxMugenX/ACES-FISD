@@ -16,10 +16,18 @@ router.get('/', async (req, res) => {
             const SessionUser = JWT.verify(Token, SECRET)
             const _id = SessionUser.id
             const CurrentUser = await User.findById(_id)
+            const sensors = []
+            const timestamp = Date.now();
+
+            
+            for (const i in CurrentUser.SensorData) {
+                sensors.push(CurrentUser.SensorData[i])
+            }
+            sensors.unshift({time: timestamp})
            
             //get values of selected sensor for user
             return res.json({
-                 sensordata : CurrentUser.SensorData
+                 sensors
             })
             
         }

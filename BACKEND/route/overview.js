@@ -14,10 +14,11 @@ router.get('/',async (req,res) => {
         const SessionUser = JWT.verify(Token, SECRET)
         const _id = SessionUser.id
         const CurrentUser = await User.findById(_id)
-        
+        const allFruits = require('../AI_MODEL/data.json')
 
         //get sensor data overview,
         return res.json({
+            fruitData : allFruits,
             SensorData : CurrentUser.SensorData
         })
         
