@@ -8,7 +8,13 @@ const UserSchema = new schema({
     FarmName: { type: String, required: true },
     Telephone: {type: Number, required: true},
     Email: { type: String, required: true },
-    SensorData : {type : Object}
+    SensorData: {
+        tempSensor : {type: Number},
+        soilMoistureSensor : {type: Number},
+        humiditySensor : {type: Number},
+        phSensor : {type: Number},
+        motionSensor : {type: Boolean}
+    }
     //DateCreated
 },
     {collection: "Users"}

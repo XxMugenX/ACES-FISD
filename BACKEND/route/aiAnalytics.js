@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
                 const allData = require('../AI_MODEL/data.json')
                                
                 return res.json({
-                    allData
+                    ...allData
                 })
                 
             }
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:fruitId', async (req, res) => {
-    const {Token,fruitId} = req.query
+    const {Token,fruitId} = req.params
             try {
                 const SessionUser = JWT.verify(Token, SECRET)
                 const _id = SessionUser.id
@@ -42,7 +42,7 @@ router.get('/:fruitId', async (req, res) => {
                 const data = readAiAnalysis(fruitId)
                 
                 return res.json({
-                    data
+                    ...data
                 })
                 
             }

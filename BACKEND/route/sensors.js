@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
            
             //get values of selected sensor for user
             return res.json({
-                 sensordata : CurrentUser.SensorData[sensor]
+                 sensordata : CurrentUser.SensorData
             })
             
         }

@@ -223,27 +223,27 @@
             <h1>Sign up</h1>
             <div class="input-group">
                 <label for="signup-username">Username</label>
-                <input type="text" id="signup-username" class="input-field" placeholder="Choose a username">
+                <input type="text" id="signup-username" class="input-field" placeholder="Choose a username" required>
                 <div class="error-message" id="username-error"></div>
             </div>
             <div class="input-group">
                 <label for="signup-farmname">Farm Name</label>
-                <input type="text" id="signup-farmname" class="input-field" placeholder="Enter your farm name">
+                <input type="text" id="signup-farmname" class="input-field" placeholder="Enter your farm name" required>
                 <div class="error-message" id="farmname-error"></div>
             </div>
             <div class="input-group">
                 <label for="signup-email">Email</label>
-                <input type="email" id="signup-email" class="input-field" placeholder="Enter your email">
+                <input type="email" id="signup-email" class="input-field" placeholder="Enter your email" required>
                 <div class="error-message" id="email-error"></div>
             </div>
             <div class="input-group">
                 <label for="signup-telephone">Telephone</label>
-                <input type="tel" id="signup-telephone" class="input-field" placeholder="Enter your telephone number">
+                <input type="tel" id="signup-telephone" class="input-field" placeholder="Enter your telephone number" required>
                 <div class="error-message" id="telephone-error"></div>
             </div>
             <div class="input-group">
                 <label for="signup-password">Password</label>
-                <input type="password" id="signup-password" class="input-field" placeholder="Create a password">
+                <input type="password" id="signup-password" class="input-field" placeholder="Create a password" required>
                 <div class="password-toggle" onclick="togglePassword('signup-password', 'signup-eye-show', 'signup-eye-hide')">
                     <svg id="signup-eye-show" class="show-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -258,7 +258,7 @@
             </div>
             <div class="input-group">
                 <label for="signup-confirm-password">Confirm Password</label>
-                <input type="password" id="signup-confirm-password" class="input-field" placeholder="Confirm your password">
+                <input type="password" id="signup-confirm-password" class="input-field" placeholder="Confirm your password" required>
                 <div class="password-toggle" onclick="togglePassword('signup-confirm-password', 'signup-confirm-eye-show', 'signup-confirm-eye-hide')">
                     <svg id="signup-confirm-eye-show" class="show-password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -377,110 +377,38 @@
             resetErrors();
             
             const UserName = document.getElementById('signup-username').value;
-            const farmName = document.getElementById('signup-farmname').value;
-            const email = document.getElementById('signup-email').value;
-            const telephone = document.getElementById('signup-telephone').value;
+            const FarmName = document.getElementById('signup-farmname').value;
+            const Email = document.getElementById('signup-email').value;
+            const Telephone = document.getElementById('signup-telephone').value;
             const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            //const confirmPassword = document.getElementById('signup-confirm-password').value;
             
-            const result = await fetch('/api/Signup', {
+            const result = await fetch('https://aces-fisd.onrender.com/api/signup/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': "application/json"
                 },
                 body: JSON.stringify({
                     UserName, password,
-                    DOB, email,
-                    telephone, F_name,
-                    L_name
+                    Email,
+                    Telephone, FarmName,
                 })
             }).then((res) => res.json())
-            //let isValid = true;
-            
-            // Validate username
-            // if (!username) {
-            //     document.getElementById('username-error').textContent = 'Username is required';
-            //     document.getElementById('username-error').style.display = 'block';
-            //     isValid = false;
-            // } else if (usernameExists(username)) {
-            //     document.getElementById('username-error').textContent = 'Username is already in use';
-            //     document.getElementById('username-error').style.display = 'block';
-                
-                // Log to console as requested
-            //     console.log({
-            //         "error": "Username is already in use"
-            //     });
-                
-            //     showNotification('Username is already in use', 'error');
-            //     isValid = false;
-            // }
-            
-            // Validate farm name
-            if (!farmname) {
-                document.getElementById('farmname-error').textContent = 'Farm name is required';
-                document.getElementById('farmname-error').style.display = 'block';
-                isValid = false;
+
+            if(result.status === 'error' & result.errortype === 'username'){
+                document.getElementById('username-error').textContent = result.error;
+                document.getElementById('username-error').style.display = 'block';
+                showNotification(result.error, 'error');
             }
-            
-            // Validate email
-            if (!email) {
-                document.getElementById('email-error').textContent = 'Email is required';
-                document.getElementById('email-error').style.display = 'block';
-                isValid = false;
-            } else if (!/\S+@\S+\.\S+/.test(email)) {
-                document.getElementById('email-error').textContent = 'Please enter a valid email';
-                document.getElementById('email-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Validate telephone
-            if (!telephone) {
-                document.getElementById('telephone-error').textContent = 'Telephone number is required';
-                document.getElementById('telephone-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Validate password
-            if (!password) {
-                document.getElementById('password-error').textContent = 'Password is required';
+           if (result.status === 'error' & result.errortype === 'password'){
+                document.getElementById('password-error').textContent = result.error;
                 document.getElementById('password-error').style.display = 'block';
-                isValid = false;
-            } else if (password.length < 6) {
-                document.getElementById('password-error').textContent = 'Password must be at least 6 characters';
-                document.getElementById('password-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // Check if passwords match
-            if (password !== confirmPassword) {
-                document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
-                document.getElementById('confirm-password-error').style.display = 'block';
-                isValid = false;
-            }
-            
-            // if (isValid) {
-            //     // Get existing users or initialize empty array
-            //     const users = JSON.parse(localStorage.getItem('farmUsers')) || [];
-                
-                // Add new user
-                // users.push({
-                //     username,
-                //     farmname,
-                //     email,
-                //     telephone,
-                //     password // In a real app, you'd hash this password
-                // });
-                
-                // Save back to localStorage
-                //localStorage.setItem('farmUsers', JSON.stringify(users));
-                
-                // Log success to console as requested
-                // console.log({
-                //     "status": "ok"
-                // });
-                
-                // Show success notification
-                showNotification('Signup successful! Redirecting to login...', 'success');
+                showNotification(result.error, 'error');
+
+           }
+           if(result.status === 'ok') {
+                showNotification('Account created succesfully', 'success')
+           }         
                 
                 // Redirect to login after short delay
                 setTimeout(() => {
@@ -489,71 +417,34 @@
         }
 
         // Function to handle login form submission
-        function handleLogin() {
+        async function handleLogin() {
             resetErrors();
             
-            const username = document.getElementById('login-username').value;
+            const UserName = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
             
-            let isValid = true;
-            
-            // Validate username
-            if (!username) {
-                document.getElementById('login-username-error').textContent = 'Username is required';
-                document.getElementById('login-username-error').style.display = 'block';
-                isValid = false;
+           
+            const result = await fetch('https://aces-fisd.onrender.com/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                    UserName,
+                    password
+                })
+            }).then((res) => res.json())
+        
+            if (result.status === 'ok') {
+                localStorage.setItem('Token', result.token)
+                showNotification('Login successful!', 'success');
+                window.location.replace('./index.html')
             }
-            
-            // Validate password
-            if (!password) {
-                document.getElementById('login-password-error').textContent = 'Password is required';
-                document.getElementById('login-password-error').style.display = 'block';
-                isValid = false;
+            else {
+                showNotification(result.error, 'error');
             }
-            
-            // if (isValid) {
-                // Get users from localStorage
-                //const users = JSON.parse(localStorage.getItem('farmUsers')) || [];
-                
-                // Find user with matching username and password
-                //const user = users.find(u => u.username === username && u.password === password);
-                
-                // if (user) {
-                //     // Generate a mock token
-                //     const token = "farmService_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                    
-                //     // Store token in localStorage
-                //     localStorage.setItem('farmServiceToken', token);
-                //     localStorage.setItem('currentUser', username);
-                    
-                //     // Log success to console as requested
-                //     console.log({
-                //         "status": "ok",
-                //         "Token": token
-                //     });
-                    
-                //     // Show success notification
-                    showNotification('Login successful!', 'success');
-                    
-                    // In a real app, you would redirect to dashboard
-                    // For demo, we'll just show an alert after a delay
-                    setTimeout(() => {
-                        alert('You are now logged in! In a real app, you would be redirected to the dashboard.');
-                    }, 2000);
-                    
-                 //} 
-                // else {
-                //     // Log error to console as requested
-                //     console.log({
-                //         "status": "error",
-                //         "error": "Incorrect Username/Password"
-                //     });
-                    
-                    // Show error notification
-                    showNotification('Incorrect username or password', 'error');
-                //}
-           // }
         }
+           
     </script>
 </body>
 </html>
