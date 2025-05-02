@@ -185,6 +185,46 @@
         .notification.show {
             opacity: 1;
         }
+
+        @media (max-width: 992px) {
+            .container {
+                width: 90%;
+                height: auto;
+                flex-direction: column;
+            }
+            
+            .right-panel {
+                padding: 30px 20px;
+            }
+            
+            .left-panel {
+                padding: 30px 20px;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .right-panel h2 {
+                font-size: 1.5rem;
+            }
+            
+            .right-panel p {
+                font-size: 1rem;
+            }
+            
+            .input-field {
+                padding: 12px;
+            }
+            
+            .btn {
+                padding: 12px;
+            }
+        }
+        
     </style>
 </head>
 <body>
