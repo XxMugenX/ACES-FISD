@@ -3,70 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>yourland - Smart Farming Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+      <link rel="stylesheet" href="css/styles.css">
+
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/charts.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav>
-        <div>yourland</div>
-        <div>
-            <div>Overview</div>
-            <div>Sensors</div>
-            <div>AI Analytics</div>
-        </div>
-        <div>
-            <h4>new!</h4>
-            <p>
-                Ready to connect and <br>help farmers grow
-            </p>
-            <img src="" alt="Weird looking">
-        </div>
-        <div>
-            <p>Logout</p>
-        </div>
-    </nav>
-    <div class="second">
-        <!-- <div>
-            Your weekly progress
-        </div> -->
-        <div class="fruits">
-            <div>
-                <img src="" alt="Weird looking">
-                <p>mango</p>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="logo">yourland</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Overview</a>
+                <a href="sensors.html" class="nav-link">Sensors</a>
+                <a href="analytics.html" class="nav-link">Analytics</a>
             </div>
-            <div>
-                <img src="" alt="Weird looking">
-                <p>pear</p>
-            </div>
-            <div>
-                <img src="" alt="Weird looking">
-                <p>avocado</p>
-            </div>
-            <div>
-                <img src="" alt="Weird looking">
-                <p>carrot</p>
-            </div>
+                         <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User">
+          </div>
+          <div class="user-details">
+            <p class="user-status">Ready to connect your farm device?</p>
+          </div>
+          
         </div>
-        <div class="graph"></div>
-        <div class="perfect_day"></div>
+        <button class="logout-btn">Logout →</button>
+      </div>
+        </nav>    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-left">
+          <div class="header-tag">
+            <span>Exotic Inc.</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <div class="search-bar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Search by Field, Vegetable, Metric">
+          </div>
+        </div>
+
+        <div class="user-profile">
+          <img src="https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile">
+          <span>Marta Orest</span>
+        </div>
+      </header>
+
+      <section class="weekly-progress">
+        <div class="section-header">
+          <h2>Your weekly progress</h2>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <div class="crop-cards">
+          <div class="crop-card mango">
+            <div class="crop-icon">🥭</div>
+            <h3>Mango</h3>
+            <div class="growth-indicator">
+              <div class="growth-bar" style="width: 45%"></div>
+            </div>
+            <p class="growth-text">45% Growth</p>
+          </div>
+
+          <div class="crop-card pear">
+            <div class="crop-icon">🍐</div>
+            <h3>Pear</h3>
+            <div class="growth-indicator">
+              <div class="growth-bar" style="width: 55%"></div>
+            </div>
+            <p class="growth-text">55% Growth</p>
+          </div>
+
+          <div class="crop-card avocado">
+            <div class="crop-icon">🥑</div>
+            <h3>Avocado</h3>
+            <div class="growth-indicator">
+              <div class="growth-bar" style="width: 34%"></div>
+            </div>
+            <p class="growth-text">34% Growth</p>
+          </div>
+
+          <div class="crop-card carrot">
+            <div class="crop-icon">🥕</div>
+            <h3>Carrot</h3>
+            <div class="growth-indicator">
+              <div class="growth-bar" style="width: 82%"></div>
+            </div>
+            <p class="growth-text">82% Growth</p>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+<!--           <div class="analysis-card">
+  <h3>Predictive analysis</h3>
+  <div class="chart-container">
+    <canvas id="analysisChart"></canvas>
+  </div>
+</div>
+ -->
+          <div class="spray-card">
+            <h3>It's the perfect day for spraying</h3>
+            <div class="spray-info">
+              <div class="spray-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 21h10"></path>
+                  <path d="M12 21v-2"></path>
+                  <path d="M3 7v1a7 7 0 0 0 7 7h4a7 7 0 0 0 7-7V7"></path>
+                  <path d="M5 3a3 3 0 0 1 6 0"></path>
+                  <path d="M19 3a3 3 0 0 0-6 0"></path>
+                </svg>
+              </div>
+              <div class="spray-details">
+                <div class="spray-metric">
+                  <span class="metric-value" id="airTenpValue">4.39 °C</span>
+                  <span class="metric-label">average air temperature</span>
+                </div>
+                <div class="spray-metric">
+                  <span class="metric-value" id="pHValue">pH7</span>
+                  <span class="metric-label">real-time soil pH</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="weather-card">
+            <div class="date-column">
+              <div class="date-item">
+                <h3>12</h3>
+                <p>September</p>
+              </div>
+              <div class="date-item">
+                <h3>13</h3>
+                <p>September</p>
+              </div>
+              <div class="date-item">
+                <h3>14</h3>
+                <p>September</p>
+              </div>
+              <div class="date-item">
+                <h3>15</h3>
+                <p>September</p>
+              </div>
+            </div>
+            <div class="weather-column">
+              <div class="weather-item">
+                <div class="temp">22°</div>
+                <div class="condition">Mostly sunny</div>
+                <div class="weather-icon">🌤️</div>
+              </div>
+              <div class="weather-item">
+                <div class="temp">26°</div>
+                <div class="condition">Sunny</div>
+                <div class="weather-icon">☀️</div>
+              </div>
+              <div class="weather-item">
+                <div class="temp">19°</div>
+                <div class="condition">Cloudy</div>
+                <div class="weather-icon">☁️</div>
+              </div>
+              <div class="weather-item">
+                <div class="temp">22°</div>
+                <div class="condition">Mostly sunny</div>
+                <div class="weather-icon">🌤️</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="metrics-card">
+            <div class="metric">
+              <div class="metric-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="metric-label">Air quality</div>
+              <div class="metric-value">95%</div>
+            </div>
+            <div class="metric">
+              <div class="metric-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 22h16"></path>
+                  <path d="M2 12h20"></path>
+                  <path d="M12 2v20"></path>
+                  <path d="m19 15 3-3-3-3"></path>
+                  <path d="m5 9-3 3 3 3"></path>
+                </svg>
+              </div>
+              <div class="metric-label">Soil Moisture</div>
+              <div class="metric-value">21%</div>
+            </div>
+            <div class="metric">
+              <div class="metric-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="metric-label">Land Fertility</div>
+              <div class="metric-value">95%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+ 
+
     </div>
-    <div class="third">
-        <div>
-            <p>12</p>
-            <div></div>
-        </div>
-        <div>
-            <p>13</p>
-            <div></div>
-        </div>
-        <div>
-            <p>14</p>
-            <div></div>
-        </div>
-        <div>
-            <p>15</p>
-            <div></div>
-        </div>
-    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/charts.js"></script>
 </body>
 </html>

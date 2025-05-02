@@ -436,7 +436,7 @@
             }).then((res) => res.json())
         
             if (result.status === 'ok') {
-                localStorage.setItem('Token', result.token)
+                localStorage.setItem('token', result.token)
                 showNotification('Login successful!', 'success');
                 window.location.replace('./index.html')
             }

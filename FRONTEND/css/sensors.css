@@ -1,0 +1,28 @@
+.sensors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.sensor-card {
+    background-color: var(--bg-light);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.sensor-card h3 {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+}
+
+.sensor-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+}
+
+.sensor-chart {
+    height: 200px;
+}

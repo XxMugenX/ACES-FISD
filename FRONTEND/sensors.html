@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yourland - Sensors Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/sensors.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <nav class="sidebar">
+            <div class="logo">yourland</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="sensors.html" class="nav-link active">Sensors</a>
+                <a href="analytics.html" class="nav-link">Analytics</a>
+            </div>
+         
+            
+             <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User">
+          </div>
+          <div class="user-details">
+            <p class="user-status">Ready to connect your farm device?</p>
+          </div>
+          
+        </div>
+        <button class="logout-btn">Logout →</button>
+      </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <div class="header-tag">
+                        <span>Sensors</span>
+                        <span class="chevron-down">▼</span>
+                    </div>
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search sensors">
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile">
+                    <span>Marta Orest</span>
+                </div>
+            </header>
+
+            <div class="sensors-grid">
+                <div class="sensor-card">
+                    <h3>Soil Moisture</h3>
+                    <div class="sensor-value">65%</div>
+                    <div class="sensor-chart">
+                        <canvas id="soilMoistureChart"></canvas>
+                    </div>
+                </div>
+                <div class="sensor-card">
+                    <h3>Temperature</h3>
+                    <div class="sensor-value">24°C</div>
+                    <div class="sensor-chart">
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+                </div>
+                <div class="sensor-card">
+                    <h3>Humidity</h3>
+                    <div class="sensor-value">78%</div>
+                    <div class="sensor-chart">
+                        <canvas id="humidityChart"></canvas>
+                    </div>
+                </div>
+                <div class="sensor-card">
+                    <h3>Soil pH</h3>
+                    <div class="sensor-value">6.5</div>
+                    <div class="sensor-chart">
+                        <canvas id="phChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/sensors.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yourland Farming Dashboard - Analytics</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/analytics.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+            <nav class="sidebar">
+            <div class="logo">yourland</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="sensors.html" class="nav-link">Sensors</a>
+                <a href="analytics.html" class="nav-link active">Analytics</a>
+            </div>             <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User">
+          </div>
+          <div class="user-details">
+            <p class="user-status">Ready to connect your farm device?</p>
+          </div>
+          
+        </div>
+        <button class="logout-btn">Logout →</button>
+      </div>
+          
+        </nav>    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-left">
+          <div class="header-tag">
+            <span>Analytics</span>
+            <span class="chevron-down">▼</span>
+          </div>
+
+          <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search by Field, Vegetable, Metric">
+          </div>
+        </div>
+
+        <div class="user-profile">
+          <img src="https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile">
+          <span>Marta Orest</span>
+        </div>
+      </header>
+
+      <div class="analytics-container">
+        <div class="crop-selector">
+          <label for="cropSelect">Your desired crop</label>
+          <select id="cropSelect" class="crop-select">
+            <option data-id="0" value="Apple">Apple</option>
+            <option data-id="1" value="Banana">Banana</option>
+            <option data-id="2" value="coconut">Coconut</option>
+            <option data-id="3" value="coffee">Coffee</option>
+          </select>
+        </div>
+
+        <div class="analysis-content">
+          <div class="analysis-results">
+            <h2>Analysis Results</h2>
+            
+            <div class="results-warning" id="unsuitableWarning">
+              ❌ Unsuitable for Apple
+            </div>
+
+            <div class="results-details">
+              <ul>
+                <li>Nitrogen (N): Needs about <span id="nitrogenRange"></span></li>
+                <li>Phosphorus (P): Needs about <span id="phosphorusRange"></span></li>
+                <li>Potassium (K): Needs about <span id="potassiumRange"></span></li>
+                <li>Temperature (°C): <span id="temperatureAvg">22</span> (needs <span id="temperatureRange"></span>)</li>
+                <li>Humidity (%):  <span id="humidityAvg">22</span> (needs <span id="humidityRange">30.025751716-94.92048112</span>)</li>
+                <li>pH Level:  <span id="pHAvg">22</span> (needs <span id="pHRange">5.514523142-6.499226621</span>)</li>
+                <li>Rainfall (mm):  <span id="soilMoistureAvg">22</span> (needs <span id="soilMoistureRange">)</li>
+              </ul>
+            </div>
+
+            <div class="suitable-crops">
+              <h3>🌱 All Suitable Crops</h3>
+              <ul id="suitableCropsList">
+                <li>Mango</li>
+              </ul>
+            </div>
+
+            <div class="action-buttons">
+              <button class="action-btn" id="viewRequirements">
+                📊 View Crop Requirements Table
+              </button>
+         
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/analytics.js"></script>
+</body>
+</html>
