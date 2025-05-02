@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>farmEasy Dashboard - Analytics</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/analytics.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Add these styles for the iframe */
+    .iframe-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 80px); /* Adjust based on your header height */
+    }
+    
+    .iframe-wrapper {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .analytics-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #f5f5f5;
+    }
+    
+    .iframe-controls {
+      display: flex;
+      padding: 10px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .iframe-url {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    
+    .iframe-btn {
+      padding: 8px 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <nav class="sidebar">
+      <div class="logo">farmEasy</div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Overview</a>
+        <a href="sensors.html" class="nav-link">Sensors</a>
+        <a href="analytics.html" class="nav-link active">Analytics</a>
+        <a href="crop.html" class="nav-link">Crop Adviser</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User">
+          </div>
+          <div class="user-details">
+            <p class="user-status">Ready to connect your farm device?</p>
+          </div>
+        </div>
+        <button class="logout-btn">Logout →</button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-left">
+          <div class="header-tag">
+            <span>Analytics</span>
+            <span class="chevron-down">▼</span>
+          </div>
+        </div>
+
+        <div class="user-profile">
+          <img src="https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile">
+          <span>Marta Orest</span>
+        </div>
+      </header>
+
+      <div class="iframe-container">
+        <!-- <div class="iframe-controls">
+          <input type="text" class="iframe-url" id="iframeUrl" 
+                 placeholder="Enter URL (e.g., https://example.com)" 
+                 value="https://example.com">
+          <button class="iframe-btn" id="loadIframe">Load</button>
+        </div> -->
+        <div class="iframe-wrapper">
+          <iframe class="analytics-iframe" id="analyticsIframe" 
+                  src="https://crop-advisor-pro.onrender.com/" 
+                  allow="fullscreen" 
+                  title="Analytics Dashboard">
+          </iframe>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const iframe = document.getElementById('analyticsIframe');
+      const urlInput = document.getElementById('iframeUrl');
+      const loadBtn = document.getElementById('loadIframe');
+      
+      // Load iframe when button is clicked
+      loadBtn.addEventListener('click', function() {
+        let url = urlInput.value.trim();
+        
+        // Add https:// if not present
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          url = 'https://' + url;
+          urlInput.value = url;
+        }
+        
+        iframe.src = url;
+      });
+      
+      // Also load when Enter key is pressed
+      urlInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          loadBtn.click();
+        }
+      });
+      
+      // Logout button functionality
+      document.querySelector('.logout-btn').addEventListener('click', function() {
+        // Add your logout logic here
+        window.location.href = 'login.html';
+      });
+    });
+  </script>
+</body>
+</html>
