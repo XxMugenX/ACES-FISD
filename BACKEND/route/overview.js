@@ -15,11 +15,11 @@ router.get('/',async (req,res) => {
         const _id = SessionUser.id
         const CurrentUser = await User.findById(_id)
         const allFruits = require('../AI_MODEL/data.json')
-
+        const sensor = await CurrentUser.SensorData
         //get sensor data overview,
         return res.json({
             fruitData : allFruits,
-            SensorData : CurrentUser.SensorData
+            sensor
         })
         
     }
