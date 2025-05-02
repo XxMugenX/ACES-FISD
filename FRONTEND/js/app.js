@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize all components
   initializeSidebar();
   initializeDashboard();
-  initializeCharts();
+  //initializeCharts();
   
   // Handle search functionality
   const searchInput = document.querySelector('.search-bar input');
@@ -14,8 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   //Initialise login token if not set previouly
-  
+  alert(localStorage.getItem("token"))
  if(!localStorage.getItem("token")) {
+   alert(null)
     localStorage.setItem("token", "")  
    window.location.replace('./account.html')
  } else if(localStorage.getItem("token") === ""){
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
  }
   
   // Handle logout
-  const logoutBtn = document.querySelector('.logout-btn');
+  const logoutBtn = document.querySelector('#logout-btn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       console.log('Logging out...');
