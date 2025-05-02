@@ -21,7 +21,6 @@
                 <a href="index.html" class="nav-link active">Overview</a>
                 <a href="sensors.html" class="nav-link">Sensors</a>
                 <a href="analytics.html" class="nav-link">Analytics</a>
-                <a href="crop.html" class="nav-link">Crop Adviser</a>
             </div>
                          <div class="sidebar-footer">
         <div class="user-info">
@@ -115,109 +114,120 @@
   </div>
 </div>
  -->
-          <div class="spray-card">
-            <h3>It's the perfect day for spraying</h3>
-            <div class="spray-info">
-              <div class="spray-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7 21h10"></path>
-                  <path d="M12 21v-2"></path>
-                  <path d="M3 7v1a7 7 0 0 0 7 7h4a7 7 0 0 0 7-7V7"></path>
-                  <path d="M5 3a3 3 0 0 1 6 0"></path>
-                  <path d="M19 3a3 3 0 0 0-6 0"></path>
-                </svg>
-              </div>
-              <div class="spray-details">
-                <div class="spray-metric">
-                  <span class="metric-value" id="airTenpValue">4.39 °C</span>
-                  <span class="metric-label">average air temperature</span>
-                </div>
-                <div class="spray-metric">
-                  <span class="metric-value" id="pHValue">pH7</span>
-                  <span class="metric-label">real-time soil pH</span>
-                </div>
-              </div>
-            </div>
-          </div>
+       <div class="city-selector">
+  <label for="city-select">Select City:</label>
+  <select id="city-select">
+    <option value="benin-city" selected>Benin City</option>
+    <option value="auchi">Auchi</option>
+    <option value="ekpoma">Ekpoma</option>
+    <option value="uromi">Uromi</option>
+    <option value="igarra">Igarra</option>
+  </select>
+</div>
 
-          <div class="weather-card">
-            <div class="date-column">
-              <div class="date-item">
-                <h3>12</h3>
-                <p>September</p>
-              </div>
-              <div class="date-item">
-                <h3>13</h3>
-                <p>September</p>
-              </div>
-              <div class="date-item">
-                <h3>14</h3>
-                <p>September</p>
-              </div>
-              <div class="date-item">
-                <h3>15</h3>
-                <p>September</p>
-              </div>
-            </div>
-            <div class="weather-column">
-              <div class="weather-item">
-                <div class="temp">22°</div>
-                <div class="condition">Mostly sunny</div>
-                <div class="weather-icon">🌤️</div>
-              </div>
-              <div class="weather-item">
-                <div class="temp">26°</div>
-                <div class="condition">Sunny</div>
-                <div class="weather-icon">☀️</div>
-              </div>
-              <div class="weather-item">
-                <div class="temp">19°</div>
-                <div class="condition">Cloudy</div>
-                <div class="weather-icon">☁️</div>
-              </div>
-              <div class="weather-item">
-                <div class="temp">22°</div>
-                <div class="condition">Mostly sunny</div>
-                <div class="weather-icon">🌤️</div>
-              </div>
-            </div>
-          </div>
+<div class="spray-card">
+  <h3>It's the perfect day for spraying</h3>
+  <div class="spray-info">
+    <div class="spray-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 21h10"></path>
+        <path d="M12 21v-2"></path>
+        <path d="M3 7v1a7 7 0 0 0 7 7h4a7 7 0 0 0 7-7V7"></path>
+        <path d="M5 3a3 3 0 0 1 6 0"></path>
+        <path d="M19 3a3 3 0 0 0-6 0"></path>
+      </svg>
+    </div>
+    <div class="spray-details">
+      <div class="spray-metric">
+        <span class="metric-value" id="airTempValue">4.39 °C</span>
+        <span class="metric-label">average air temperature</span>
+      </div>
+      <div class="spray-metric">
+        <span class="metric-value" id="pHValue">pH7</span>
+        <span class="metric-label">real-time soil pH</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-          <div class="metrics-card">
-            <div class="metric">
-              <div class="metric-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <div class="metric-label">Air quality</div>
-              <div class="metric-value">95%</div>
-            </div>
-            <div class="metric">
-              <div class="metric-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 22h16"></path>
-                  <path d="M2 12h20"></path>
-                  <path d="M12 2v20"></path>
-                  <path d="m19 15 3-3-3-3"></path>
-                  <path d="m5 9-3 3 3 3"></path>
-                </svg>
-              </div>
-              <div class="metric-label">Soil Moisture</div>
-              <div class="metric-value">21%</div>
-            </div>
-            <div class="metric">
-              <div class="metric-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
-              <div class="metric-label">Land Fertility</div>
-              <div class="metric-value">95%</div>
-            </div>
-          </div>
+<div class="weather-card">
+  <div class="date-column" id="date-column">
+    <div class="date-item">
+      <h3>12</h3>
+      <p>September</p>
+    </div>
+    <div class="date-item">
+      <h3>13</h3>
+      <p>September</p>
+    </div>
+    <div class="date-item">
+      <h3>14</h3>
+      <p>September</p>
+    </div>
+    <div class="date-item">
+      <h3>15</h3>
+      <p>September</p>
+    </div>
+  </div>
+  <div class="weather-column" id="weather-column">
+    <div class="weather-item">
+      <div class="temp">22°</div>
+      <div class="condition">Mostly sunny</div>
+      <div class="weather-icon">🌤️</div>
+    </div>
+    <div class="weather-item">
+      <div class="temp">26°</div>
+      <div class="condition">Sunny</div>
+      <div class="weather-icon">☀️</div>
+    </div>
+    <div class="weather-item">
+      <div class="temp">19°</div>
+      <div class="condition">Cloudy</div>
+      <div class="weather-icon">☁️</div>
+    </div>
+    <div class="weather-item">
+      <div class="temp">22°</div>
+      <div class="condition">Mostly sunny</div>
+      <div class="weather-icon">🌤️</div>
+    </div>
+  </div>
+</div>
+
+<div class="metrics-card">
+  <div class="metric">
+    <div class="metric-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>
+    </div>
+    <div class="metric-label">Air quality</div>
+    <div class="metric-value" id="airQuality">95%</div>
+  </div>
+  <div class="metric">
+    <div class="metric-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 22h16"></path>
+        <path d="M2 12h20"></path>
+        <path d="M12 2v20"></path>
+        <path d="m19 15 3-3-3-3"></path>
+        <path d="m5 9-3 3 3 3"></path>
+      </svg>
+    </div>
+    <div class="metric-label">Soil Moisture</div>
+    <div class="metric-value" id="soilMoisture">21%</div>
+  </div>
+  <div class="metric">
+    <div class="metric-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    </div>
+    <div class="metric-label">Land Fertility</div>
+    <div class="metric-value" id="landFertility">95%</div>
+  </div>
+</div>
         </div>
       </section>
     </main>

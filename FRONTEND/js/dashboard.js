@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
+//  initializeDashboard();
+});
+
 function initializeDashboard() {
   // Animate growth bars
   const growthBars = document.querySelectorAll('.growth-bar');
@@ -10,142 +14,418 @@ function initializeDashboard() {
       bar.style.width = width;
     }, 100);
   });
+    // Set up event listeners
+  const citySelect = document.getElementById('city-select');
+  citySelect.addEventListener('change', handleCityChange);
   
-  // Update weather data
-  updateWeatherData();
+  // Initial data fetch
+  fetchWeatherData('benin-city');
   
-  // Update metrics
-  updateMetrics();
+  // Set up intervals for real-time updates
+  setUpIntervals();
+  
+  // Update dates for the forecast
+  updateForecastDates();
+
 }
- //Fetches weather and air quality data for Benin City, Nigeria
- // from Open-Meteo APIs for a 5-day window centered around today.
-  //Includes daily temperature (max/min), weather code, hourly soil moisture,
- // and hourly air quality parameters (PM10, PM2.5, European AQI).
- 
-async function getBeninCityWeatherData() {
-  // Coordinates for Benin City, Nigeria (approximate)
-  const latitude = 6.30;
-  const longitude = 5.62;
 
-  // Define the 5-day window: today, two days before, two days after.
-  const today = new Date();
-  const startDate = new Date(today);
-  startDate.setDate(today.getDate() - 2); // Two days before
 
-  const endDate = new Date(today);
-  endDate.setDate(today.getDate() + 2); // Two days after
+// Weather API configuration
+const API_KEY = 'f989c7738b11457b5b178533a0a09dd2'; // Replace with actual API key
+const WEATHER_API_BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
-  // Format dates as YYYY-MM-DD for API
-  const formatDate = (date) => date.toISOString().split('T')[0];
-  const formattedStartDate = formatDate(startDate);
-  const formattedEndDate = formatDate(endDate);
+// City coordinates in Edo State
+const cityCoordinates = {
+  'benin-city': { lat: 6.3350, lon: 5.6037, name: 'Benin City' },
+  'auchi': { lat: 7.0675, lon: 6.2661, name: 'Auchi' },
+  'ekpoma': { lat: 6.7437, lon: 6.1364, name: 'Ekpoma' },
+  'uromi': { lat: 6.7015, lon: 6.3288, name: 'Uromi' },
+  'igarra': { lat: 7.2935, lon: 6.1086, name: 'Igarra' }
+};
 
-  // Base URLs for Open-Meteo APIs
-  const weatherApiBaseUrl = 'https://api.open-meteo.com/v1/forecast';
-  const airQualityApiBaseUrl = 'https://air-quality-api.open-meteo.com/v1/air-quality';
+// Weather condition icons mapping
+const weatherIcons = {
+  'Clear': '☀️',
+  'Clouds': '☁️',
+  'Rain': '🌧️',
+  'Drizzle': '🌦️',
+  'Thunderstorm': '⛈️',
+  'Snow': '❄️',
+  'Mist': '🌫️',
+  'Fog': '🌫️',
+  'Haze': '🌫️',
+  'Dust': '💨',
+  'Smoke': '💨',
+  'Tornado': '🌪️',
+  'default': '🌤️'
+};
 
-  // Construct the Weather API URL
-  const weatherApiUrl = `${weatherApiBaseUrl}?latitude=${latitude}&longitude=${longitude}&timezone=auto&start_date=${formattedStartDate}&end_date=${formattedEndDate}&daily=temperature_2m_max,temperature_2m_min,weathercode&hourly=soil_moisture_0_to_7cm`;
 
-  // Construct the Air Quality API URL
-  const airQualityApiUrl = `${airQualityApiBaseUrl}?latitude=${latitude}&longitude=${longitude}&timezone=auto&start_date=${formattedStartDate}&end_date=${formattedEndDate}&hourly=pm10,pm25,european_aqi`; // Added common AQI parameters
 
+// Handle city selection change
+function handleCityChange(event) {
+  const selectedCity = event.target.value;
+  fetchWeatherData(selectedCity);
+}
+
+// Fetch weather data from API
+async function fetchWeatherData(cityId) {
   try {
-    // Use Promise.all to fetch data from both APIs concurrently
-    const [weatherResponse, airQualityResponse] = await Promise.all([
-      fetch(weatherApiUrl),
-      fetch(airQualityApiUrl)
-    ]);
-
-    // Check if both responses are OK
-    if (!weatherResponse.ok) {
-      throw new Error(`Weather API HTTP error! status: ${weatherResponse.status}`);
+    showLoading(true);
+    
+    const city = cityCoordinates[cityId];
+    if (!city) {
+      console.error('City not found');
+      return;
     }
-    if (!airQualityResponse.ok) {
-       throw new Error(`Air Quality API HTTP error! status: ${airQualityResponse.status}`);
-    }
-
-    // Parse the JSON responses
-    const weatherData = await weatherResponse.json();
-    const airQualityData = await airQualityResponse.json();
-
-    // Return the combined data
-    return { weatherData, airQualityData };
-
+    
+    // Fetch current weather
+    const currentWeatherUrl = `${WEATHER_API_BASE_URL}/weather?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${API_KEY}`;
+    const currentWeatherResponse = await fetchWithFallback(currentWeatherUrl);
+    
+    // Fetch forecast
+    const forecastUrl = `${WEATHER_API_BASE_URL}/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${API_KEY}`;
+    const forecastResponse = await fetchWithFallback(forecastUrl);
+    
+    // Fetch air pollution data
+    const airPollutionUrl = `${WEATHER_API_BASE_URL}/air_pollution?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`;
+    const airPollutionResponse = await fetchWithFallback(airPollutionUrl);
+    
+    // Update UI with fetched data
+    updateCurrentWeather(currentWeatherResponse);
+    updateForecast(forecastResponse);
+    updateAirQuality(airPollutionResponse);
+    
+    // Simulate soil data (since real API won't have this)
+    updateSoilData(city);
+    
+    showLoading(false);
   } catch (error) {
-    console.error("Error fetching data:", error);
-    // Re-throw the error so the caller can handle it
-    throw error;
+    console.error('Error fetching weather data:', error);
+    showLoading(false);
+    // Use mock data when API fails
+    useMockData(cityId);
   }
 }
 
-
-
-function updateWeatherData() {
-  getBeninCityWeatherData()
-    .then(data => {
-      console.log("Successfully fetched data:");
-      console.log("Weather Data:", data.weatherData);
-      console.log("Air Quality Data:", data.airQualityData);
-  
-      // Example of how to access daily weather data
-      if (data.weatherData && data.weatherData.daily) {
-          console.log("\nDaily Weather Summary:");
-          const daily = data.weatherData.daily;
-          for(let i = 0; i < daily.time.length; i++) {
-              console.log(`Date: ${daily.time[i]}`);
-              console.log(`  Max Temp: ${daily.temperature_2m_max[i]}°C`);
-              console.log(`  Min Temp: ${daily.temperature_2m_min[i]}°C`);
-              console.log(`  Weather Code: ${daily.weathercode[i]}`); // Need to map this code to a description
-          }
-      }
-  
-      // Example of how to access hourly soil moisture data
-       if (data.weatherData && data.weatherData.hourly) {
-          console.log("\nHourly Soil Moisture (first few entries):");
-          const hourlyWeather = data.weatherData.hourly;
-          for(let i = 0; i < Math.min(5, hourlyWeather.time.length); i++) { // Log first 5 entries
-              console.log(`Date/Time: ${hourlyWeather.time[i]}`);
-              console.log(`  Soil Moisture (0-7cm): ${hourlyWeather.soil_moisture_0_to_7cm[i]}%`);
-          }
-      }
-  
-       // Example of how to access hourly air quality data
-       if (data.airQualityData && data.airQualityData.hourly) {
-          console.log("\nHourly Air Quality (first few entries):");
-          const hourlyAirQuality = data.airQualityData.hourly;
-           for(let i = 0; i < Math.min(5, hourlyAirQuality.time.length); i++) { // Log first 5 entries
-              console.log(`Date/Time: ${hourlyAirQuality.time[i]}`);
-              console.log(`  PM10: ${hourlyAirQuality.pm10[i]} µg/m³`);
-              console.log(`  PM2.5: ${hourlyAirQuality.pm25[i]} µg/m³`);
-              console.log(`  European AQI: ${hourlyAirQuality.european_aqi[i]}`);
-          }
-      }
-  
-  
-    })
-    .catch(error => {
-      console.error("Failed to fetch weather and air quality data:", error);
-    });
-  // Simulate real-time weather updates
-  setInterval(() => {
-    const temps = document.querySelectorAll('.temp');
-    temps.forEach(temp => {
-      const currentTemp = parseInt(temp.textContent);
-      const variation = Math.random() > 0.5 ? 1 : -1;
-      temp.textContent = `${currentTemp + variation}°`;
-    });
-  }, 300000); // Update every 5 minutes
+// Fallback fetch function with retry logic
+async function fetchWithFallback(url, retries = 3) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    if (retries > 0) {
+      console.log(`Retrying... (${retries} attempts left)`);
+      return fetchWithFallback(url, retries - 1);
+    } else {
+      throw error;
+    }
+  }
 }
 
-function updateMetrics() {
-  // Simulate real-time metric updates
+// Update current weather UI
+function updateCurrentWeather(data) {
+  if (!data) return;
+  
+  const airTempValue = document.querySelector('#airTempValue');
+  airTempValue.textContent = `${data.main.temp.toFixed(2)} °C`;
+  
+  // Update the spray card title based on weather condition
+  const sprayCardTitle = document.querySelector('.spray-card h3');
+  const isGoodForSpraying = isWeatherGoodForSpraying(data);
+  sprayCardTitle.textContent = isGoodForSpraying 
+    ? "It's the perfect day for spraying" 
+    : "Not recommended for spraying today";
+  
+  if (!isGoodForSpraying) {
+    sprayCardTitle.style.color = '#d9534f';
+  } else {
+    sprayCardTitle.style.color = '';
+  }
+}
+
+// Determine if weather is good for spraying
+function isWeatherGoodForSpraying(weatherData) {
+
+  const temp = weatherData.main.temp;
+  const windSpeed = weatherData.wind.speed;
+  const weatherCondition = weatherData.weather[0].main;
+  
+  const noRain = !['Rain', 'Thunderstorm', 'Drizzle'].includes(weatherCondition);
+  const moderateWind = windSpeed < 5.5; // m/s (about 20 km/h)
+  const goodTemp = temp > 10 && temp < 30;
+  
+  return noRain && moderateWind && goodTemp;
+}
+
+// Update forecast UI
+function updateForecast(data) {
+  if (!data || !data.list) return;
+  
+  const weatherColumn = document.getElementById('weather-column');
+  weatherColumn.innerHTML = '';
+  
+  // Group forecast by day and get next 4 days
+  const forecastByDay = groupForecastByDay(data.list);
+  const nextFourDays = Object.keys(forecastByDay).slice(0, 4);
+  
+  nextFourDays.forEach(day => {
+    const dayData = forecastByDay[day];
+    const midDayForecast = dayData[Math.floor(dayData.length / 2)]; // Get middle of day forecast
+    
+    const weatherItem = document.createElement('div');
+    weatherItem.className = 'weather-item';
+    
+    const tempElement = document.createElement('div');
+    tempElement.className = 'temp';
+    tempElement.textContent = `${Math.round(midDayForecast.main.temp)}°`;
+    
+    const conditionElement = document.createElement('div');
+    conditionElement.className = 'condition';
+    conditionElement.textContent = midDayForecast.weather[0].description;
+    
+    const iconElement = document.createElement('div');
+    iconElement.className = 'weather-icon';
+    const weatherMain = midDayForecast.weather[0].main;
+    iconElement.textContent = weatherIcons[weatherMain] || weatherIcons.default;
+    
+    weatherItem.appendChild(tempElement);
+    weatherItem.appendChild(conditionElement);
+    weatherItem.appendChild(iconElement);
+    
+    weatherColumn.appendChild(weatherItem);
+  });
+}
+
+// Group forecast data by day
+function groupForecastByDay(forecastList) {
+  const forecastByDay = {};
+  
+  forecastList.forEach(item => {
+    const date = new Date(item.dt * 1000);
+    const day = date.toISOString().split('T')[0];
+    
+    if (!forecastByDay[day]) {
+      forecastByDay[day] = [];
+    }
+    
+    forecastByDay[day].push(item);
+  });
+  
+  return forecastByDay;
+}
+
+// Update air quality UI
+function updateAirQuality(data) {
+  if (!data || !data.list || !data.list[0]) return;
+  
+  const airQualityData = data.list[0];
+  const airQualityIndex = airQualityData.main.aqi; // 1(Good) to 5(Very Poor)
+  
+  const airQualityElement = document.getElementById('airQuality');
+  
+  // Convert AQI to percentage (simplified)
+  const qualityPercentage = Math.max(0, 100 - (airQualityIndex - 1) * 20);
+  airQualityElement.textContent = `${qualityPercentage}%`;
+  
+  // Color coding based on quality
+  if (qualityPercentage > 80) {
+    airQualityElement.style.color = '#4CAF50'; // Green
+  } else if (qualityPercentage > 60) {
+    airQualityElement.style.color = '#8BC34A'; // Light green
+  } else if (qualityPercentage > 40) {
+    airQualityElement.style.color = '#FFC107'; // Amber
+  } else if (qualityPercentage > 20) {
+    airQualityElement.style.color = '#FF9800'; // Orange
+  } else {
+    airQualityElement.style.color = '#F44336'; // Red
+  }
+}
+
+// Update soil data (simulated)
+function updateSoilData(city) {
+  const soilMoistureRandom = 15 + Math.floor(Math.random() * 35); // 15-50%
+  const fertilityRandom = 70 + Math.floor(Math.random() * 30); // 70-100%
+  const pHValue = 6.5 + (Math.random() * 1.5 - 0.75); // pH 5.75-8.0
+  
+  // Apply some city-specific biases
+  let soilMoisture = soilMoistureRandom;
+  let fertility = fertilityRandom;
+  let pH = pHValue;
+  
+  switch (city.name) {
+    case 'Benin City':
+      soilMoisture += 5;
+      break;
+    case 'Auchi':
+      fertility += 5;
+      break;
+    case 'Ekpoma':
+      pH += 0.3;
+      break;
+    case 'Uromi':
+      soilMoisture -= 3;
+      fertility += 2;
+      break;
+    case 'Igarra':
+      pH -= 0.2;
+      soilMoisture += 2;
+      break;
+  }
+  
+  // Ensure values stay within reasonable ranges
+  soilMoisture = Math.min(Math.max(soilMoisture, 10), 60);
+  fertility = Math.min(Math.max(fertility, 50), 100);
+  pH = Math.min(Math.max(pH, 5.5), 8.5);
+  
+  // Update UI
+  document.getElementById('soilMoisture').textContent = `${Math.round(soilMoisture)}%`;
+  document.getElementById('landFertility').textContent = `${Math.round(fertility)}%`;
+  document.getElementById('pHValue').textContent = `pH${pH.toFixed(1)}`;
+}
+
+// Update forecast dates
+function updateForecastDates() {
+  const dateColumn = document.getElementById('date-column');
+  dateColumn.innerHTML = '';
+  
+  const today = new Date();
+  
+  for (let i = 0; i < 4; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    
+    const dateItem = document.createElement('div');
+    dateItem.className = 'date-item';
+    
+    const dayElement = document.createElement('h3');
+    dayElement.textContent = date.getDate();
+    
+    const monthElement = document.createElement('p');
+    monthElement.textContent = date.toLocaleString('default', { month: 'long' });
+    
+    dateItem.appendChild(dayElement);
+    dateItem.appendChild(monthElement);
+    dateColumn.appendChild(dateItem);
+  }
+}
+
+// Set up intervals for real-time updates
+function setUpIntervals() {
+  // Update temperature data every 5 minutes
   setInterval(() => {
-    const metrics = document.querySelectorAll('.metric-value');
-    metrics.forEach(metric => {
-      const currentValue = parseInt(metric.textContent);
-      const variation = Math.random() > 0.5 ? 1 : -1;
-      metric.textContent = `${currentValue + variation}%`;
+    const selectedCity = document.getElementById('city-select').value;
+    fetchWeatherData(selectedCity);
+  }, 300000);
+  
+  // Update metrics with small variations every minute
+  setInterval(updateMetricsWithVariation, 60000);
+}
+
+// Update metrics with small variations
+function updateMetricsWithVariation() {
+  const airQuality = document.getElementById('airQuality');
+  const soilMoisture = document.getElementById('soilMoisture');
+  const landFertility = document.getElementById('landFertility');
+  const airTemp = document.getElementById('airTempValue');
+  const pH = document.getElementById('pHValue');
+  
+  // Extract current values
+  const currentAirQuality = parseInt(airQuality.textContent);
+  const currentSoilMoisture = parseInt(soilMoisture.textContent);
+  const currentLandFertility = parseInt(landFertility.textContent);
+  const currentAirTemp = parseFloat(airTemp.textContent);
+  const currentPH = parseFloat(pH.textContent.replace('pH', ''));
+  
+  // Apply small random variations
+  const airQualityVariation = Math.random() > 0.5 ? 1 : -1;
+  const soilMoistureVariation = Math.random() > 0.5 ? 1 : -1;
+  const landFertilityVariation = Math.random() > 0.5 ? 1 : -1;
+  const airTempVariation = (Math.random() * 0.2 - 0.1).toFixed(2);
+  const pHVariation = (Math.random() * 0.2 - 0.1).toFixed(1);
+  
+  // Update UI with new values
+  airQuality.textContent = `${currentAirQuality + airQualityVariation}%`;
+  soilMoisture.textContent = `${currentSoilMoisture + soilMoistureVariation}%`;
+  landFertility.textContent = `${currentLandFertility + landFertilityVariation}%`;
+  airTemp.textContent = `${(currentAirTemp + parseFloat(airTempVariation)).toFixed(2)} °C`;
+  pH.textContent = `pH${(currentPH + parseFloat(pHVariation)).toFixed(1)}`;
+}
+
+// Show or hide loading state
+function showLoading(isLoading) {
+  const cards = document.querySelectorAll('.spray-card, .weather-card, .metrics-card');
+  
+  if (isLoading) {
+    cards.forEach(card => {
+      card.classList.add('loading');
+      card.dataset.originalContent = card.innerHTML;
+      card.innerHTML = '';
     });
-  }, 60000); // Update every minute
+  } else {
+    cards.forEach(card => {
+      if (card.dataset.originalContent) {
+        card.classList.remove('loading');
+        card.innerHTML = card.dataset.originalContent;
+        delete card.dataset.originalContent;
+      }
+    });
+  }
+}
+
+// Use mock data when API fails
+function useMockData(cityId) {
+  const city = cityCoordinates[cityId];
+  
+  // Mock current weather
+  updateCurrentWeather({
+    main: { temp: 25 + Math.random() * 5 },
+    wind: { speed: 2 + Math.random() * 3 },
+    weather: [{ main: 'Clear', description: 'clear sky' }]
+  });
+  
+  // Mock forecast
+  const mockForecast = {
+    list: []
+  };
+  
+  const today = new Date();
+  for (let i = 0; i < 4; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    
+    for (let hour = 0; hour < 24; hour += 3) {
+      date.setHours(hour);
+      mockForecast.list.push({
+        dt: Math.floor(date.getTime() / 1000),
+        main: {
+          temp: 22 + Math.random() * 10
+        },
+        weather: [{
+          main: ['Clear', 'Clouds', 'Rain'][Math.floor(Math.random() * 3)],
+          description: 'mock weather'
+        }]
+      });
+    }
+  }
+  
+  updateForecast(mockForecast);
+  
+  // Mock air quality
+  updateAirQuality({
+    list: [{
+      main: {
+        aqi: Math.floor(Math.random() * 3) + 1 // 1-3 (Good to Moderate)
+      }
+    }]
+  });
+  
+  // Simulate soil data
+  updateSoilData(city);
+  
+  // Update dates
+  updateForecastDates();
 }

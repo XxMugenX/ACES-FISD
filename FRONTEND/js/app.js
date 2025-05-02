@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize all components
   initializeSidebar();
-  initializeDashboard();
+ // initializeDashboard();
   //initializeCharts();
   
   // Handle search functionality
@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   //Initialise login token if not set previouly
-  alert(localStorage.getItem("token"))
+
  if(!localStorage.getItem("token")) {
-   alert(null)
     localStorage.setItem("token", "")  
    window.location.replace('./account.html')
- } else if(localStorage.getItem("token") === ""){
+ } else if(localStorage.getItem("token") === "" || localStorage.getItem("token") === undefined){
    console.log("token is empty")
  }
   
