@@ -12,7 +12,6 @@
 </head>
 <body>
     <div class="app-container">
-        
         <nav class="sidebar">
             <div class="logo">farmEasy</div>
             <div class="nav-links">
@@ -21,20 +20,17 @@
                 <a href="analytics.html" class="nav-link">Analytics</a>
                 <a href="crop.html" class="nav-link">Crop Adviser</a>
             </div>
-         
-            
-             <div class="sidebar-footer">
-        <div class="user-info">
-          <div class="user-avatar">
-            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User">
-          </div>
-          <div class="user-details">
-            <p class="user-status">Ready to connect your farm device?</p>
-          </div>
-          
-        </div>
-        <button id="logout-btn"  class="logout-btn">Logout →</button>
-      </div>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="User">
+                    </div>
+                    <div class="user-details">
+                        <p class="user-status">Ready to connect your farm device?</p>
+                    </div>
+                </div>
+                <button id="logout-btn" class="logout-btn">Logout →</button>
+            </div>
         </nav>
 
         <main class="main-content">
@@ -50,8 +46,8 @@
                     </div>
                 </div>
                 <div class="user-profile">
-            <img src="aces.jpg" alt="Profile">
-          <span>ACES UNIBEN</span>
+                    <img src="aces.jpg" alt="Profile">
+                    <span>ACES UNIBEN</span>
                 </div>
             </header>
 
@@ -84,6 +80,29 @@
                         <canvas id="phChart"></canvas>
                     </div>
                 </div>
+            </div>
+
+            <div class="manual-sensor-form">
+                <h2>Add Sensor Data Manually</h2>
+                <form id="sensorForm" onsubmit="handleSensorSubmit(event)">
+                    <div class="form-group">
+                        <label for="soilMoisture">Soil Moisture (%)</label>
+                        <input type="number" id="soilMoisture" name="soilMoisture" min="0" max="100" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="temperature">Temperature (°C)</label>
+                        <input type="number" id="temperature" name="temperature" min="-50" max="100" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="humidity">Humidity (%)</label>
+                        <input type="number" id="humidity" name="humidity" min="0" max="100" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ph">pH Level</label>
+                        <input type="number" id="ph" name="ph" min="0" max="14" step="0.1" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Add Sensor Data</button>
+                </form>
             </div>
         </main>
     </div>

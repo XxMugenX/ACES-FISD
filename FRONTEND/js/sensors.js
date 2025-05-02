@@ -23,46 +23,90 @@ function initializeSensorCharts() {
                 y: {
                     beginAtZero: true
                 },
-                x: { // Configure x-axis for time labels
-                    type: 'category', // Treat labels as categories
+                x: {
+                    type: 'category',
                 }
             }
         }
     };
 
-    const charts = ['soilMoisture', 'temperature', 'humidity', 'ph']; // Use keys matching data
+    const charts = ['soilMoisture', 'temperature', 'humidity', 'ph'];
     charts.forEach(sensor => {
         const ctx = document.getElementById(`${sensor}Chart`).getContext('2d');
-        // Initialize chart with empty data
         const data = {
             labels: [],
             datasets: [{
                 data: [],
                 borderColor: '#1e4c42',
                 tension: 0.4,
-                pointRadius: 3, // Add point radius to see individual data points
+                pointRadius: 3,
                 pointBackgroundColor: '#1e4c42'
             }]
         };
-        // Store the chart instance
         sensorCharts[sensor] = new Chart(ctx, { ...chartConfig, data });
     });
+}
+
+async function handleSensorSubmit(event) {
+    event.preventDefault();
+    
+    const newSensorData = {
+        soilMoisture: parseFloat(document.getElementById('soilMoisture').value),
+        temperature: parseFloat(document.getElementById('temperature').value),
+        humidity: parseFloat(document.getElementById('humidity').value),
+        pH: parseFloat(document.getElementById('ph').value),
+        timestamp: Math.floor(Date.now() / 1000)
+    };
+
+    // Add new data to allSensorData
+    allSensorData.push(newSensorData);
+
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch('https://aces-fisd.onrender.com/api/sensordata', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Token: token,
+                data: allSensorData
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.message === 'ok') {
+            alert('Sensor data added successfully!');
+            document.getElementById('sensorForm').reset();
+            updateSensorValues({
+                temperature: newSensorData.temperature,
+                humidity: newSensorData.humidity,
+                ph: newSensorData.pH,
+                soilMoisture: newSensorData.soilMoisture
+            });
+            updateSensorCharts(allSensorData);
+        } else {
+            alert('Error adding sensor data: ' + result.error);
+        }
+    } catch (error) {
+        console.error('Error submitting sensor data:', error);
+        alert('Failed to submit sensor data');
+    }
 }
 
 async function fetchSensorData() {
     try {
         const token = localStorage.getItem("token") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTMyZjM2OGY1YzhiZWJiYjlkOGYwNyIsIlVzZXJOYW1lIjoidGVzdGVyMSIsImlhdCI6MTc0NjEzMzgyNH0.m3xaFsKX_28kUlNGkHVBXZ9n3uX0prlOIUjifkUFCb4"
-      const sensor = "all"
-    // Attempt to fetch sensor data
-    const sensorResponse = await fetch(`https://aces-fisd.onrender.com/api/sensor?Token=${token}&sensor=${sensor}`);
-    let sensorResult = []
-    if (sensorResponse.ok) {
-       sensorResult = (await sensorResponse.json())?.sensordata;
-}
-        // Store the full data array
+        const sensor = "all"
+        const sensorResponse = await fetch(`https://aces-fisd.onrender.com/api/sensor?Token=${token}&sensor=${sensor}`);
+        let sensorResult = []
+        if (sensorResponse.ok) {
+           sensorResult = (await sensorResponse.json())?.sensordata;
+        }
+        
         allSensorData = sensorResult;
 
-        // Calculate averages for recent entries
         const itemsToAverage = Math.min(5, allSensorData.length);
         const recentEntries = allSensorData.slice(-itemsToAverage);
 
@@ -78,7 +122,6 @@ async function fetchSensorData() {
             soilMoistureSum += entry.soilMoisture;
         }
 
-        // Calculate averages
         sensorDataAvg = {
             temperature: parseFloat((tempSum / itemsToAverage).toFixed(2)) || 0,
             humidity: parseFloat((humiditySum / itemsToAverage).toFixed(2)) || 0,
@@ -86,10 +129,7 @@ async function fetchSensorData() {
             soilMoisture: parseFloat((soilMoistureSum / itemsToAverage).toFixed(2)) || 0
         };
 
-        // Update sensor values on the page with averages
         updateSensorValues(sensorDataAvg);
-
-        // Update charts with the fetched data
         updateSensorCharts(allSensorData);
 
     } catch (error) {
@@ -104,8 +144,8 @@ function updateSensorCharts(dataArray) {
     }
 
     const labels = dataArray.map(entry => {
-        const date = new Date(entry.timestamp * 1000); // Convert Unix timestamp to milliseconds
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format time
+        const date = new Date(entry.timestamp * 1000);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     });
 
     const temperatureData = dataArray.map(entry => entry.temperature);
@@ -113,7 +153,6 @@ function updateSensorCharts(dataArray) {
     const phData = dataArray.map(entry => entry.pH);
     const soilMoistureData = dataArray.map(entry => entry.soilMoisture);
 
-    // Update each chart
     if (sensorCharts.temperature) {
         sensorCharts.temperature.data.labels = labels;
         sensorCharts.temperature.data.datasets[0].data = temperatureData;
@@ -136,23 +175,19 @@ function updateSensorCharts(dataArray) {
     }
 }
 
-
 function updateSensorValues(data) {
     const sensorElements = document.querySelectorAll('.sensor-value');
     sensorElements.forEach(element => {
-        // Extract sensor type from the heading text, handling case variations and 'Soil PH' vs 'PH'
         let sensorType = element.parentElement.querySelector('h3').textContent.toLowerCase();
         if (sensorType.includes('soil')) {
-             sensorType = sensorType.replace('soil ', ''); // Normalize 'soil moisture' to 'moisture' or 'soil ph' to 'ph'
+             sensorType = sensorType.replace('soil ', '');
         }
 
-
-        // Map display names to data keys
         const dataKeyMap = {
             'moisture': 'soilMoisture',
             'temperature': 'temperature',
             'humidity': 'humidity',
-            'ph': 'ph' // pH from heading maps to 'ph' key in data
+            'ph': 'ph'
         };
 
         const dataKey = dataKeyMap[sensorType];
@@ -174,4 +209,3 @@ function getSensorUnit(sensorType) {
     };
     return units[sensorType] || '';
 }
-
