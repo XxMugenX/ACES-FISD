@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize all components
   initializeSidebar();
- // initializeDashboard();
+ initializeDashboard();
   //initializeCharts();
   
   // Handle search functionality
